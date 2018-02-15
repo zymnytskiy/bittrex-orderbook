@@ -32,6 +32,8 @@ class Market extends EventEmitter {
         if (update.Buys.length > 0) {
             this.emit('bidUpdate', this);
         }
+
+        this.emit('update', update)
     }
 
     constructor(name) {
