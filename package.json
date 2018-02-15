@@ -36,8 +36,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gtklocker/bittrex-orderbook.git"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }
