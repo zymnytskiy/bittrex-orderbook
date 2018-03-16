@@ -45,7 +45,7 @@ class BittrexConnection {
         });
     }
 
-    constructor() {
+    constructor(options = {}) {
         this.client = new singalR.client(
             'wss://socket.bittrex.com/signalr',     // url
             ['CoreHub'],                            // hubs
@@ -70,15 +70,27 @@ class BittrexConnection {
                 client.reject();
             }
         };
-        cloudscraper.get(PROTECTED_PAGE, (err, resp, body) => {
+
+        if (options.cfscraper) {
+          cp.exec(options.cfscraper, (err, stdout) => {
             if (err) {
-                winston.warn('failed to get cloudflare cookie');
+              winston.error(err);
+            } else {
+              this.client.headers = JSON.parse(stdout);
+              this.client.start();
+            }
+          });
+        } else {
+          cloudscraper.get(PROTECTED_PAGE, (err, resp, body) => {
+            if (err) {
+              winston.warn('failed to get cloudflare cookie');
             }
             else {
-                this.client.headers = resp.request.headers;
+              this.client.headers = resp.request.headers;
             }
             this.client.start();
-        });
+          });
+        }
     }
 }
 

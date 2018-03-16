@@ -17,7 +17,7 @@ class BittrexOrderBook {
     }
 
     setupConn() {
-        this.conn = new BittrexConnection;
+        this.conn = new BittrexConnection(this._options);
         this.conn.on('updateExchangeState', (update) => {
             const market = update.MarketName;
             if (this.haveMarket(market)) {
@@ -42,7 +42,8 @@ class BittrexOrderBook {
         return this.markets[market];
     }
 
-    constructor() {
+    constructor(options = {}) {
+        this._options = options;
         this.markets = {};
         this.setupConn();
     }
