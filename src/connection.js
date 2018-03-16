@@ -1,6 +1,7 @@
 const cloudscraper = require('cloudscraper');
 const winston = require('winston');
 const singalR = require('signalr-client');
+const cp = require('child_process');
 
 const PROTECTED_PAGE = 'https://bittrex.com/Market/Index?MarketName=USDT-BTC';
 
